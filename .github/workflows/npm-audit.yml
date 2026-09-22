@@ -1,4 +1,4 @@
-name: Security & Build Checks
+name: Validation
 
 on:
   push:
@@ -13,16 +13,16 @@ permissions:
   contents: read
 
 concurrency:
-  group: security-build-${{ github.ref }}
+  group: validation-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  checks:
-    runs-on: ubuntu-latest
+  validate:
+    runs-on: ubuntu-slim
     strategy:
       fail-fast: false
       matrix:
-        check: [audit, build]
+        validate: [audit, build]
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -36,5 +36,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run ${{ matrix.check }} check
-        run: npm run ${{ matrix.check }}
+      - name: Run ${{ matrix.validate }} validation
+        run: npm run ${{ matrix.validate }}
