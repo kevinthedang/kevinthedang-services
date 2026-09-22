@@ -1,0 +1,197 @@
+---
+const services = [
+  {
+    number: '01 / BUILD',
+    title: 'Websites that fit',
+    description: 'Flexible help with landing pages, business sites, portfolios, and small web applications, from a first idea to a finished launch.'
+  },
+  {
+    number: '02 / LAUNCH',
+    title: 'Launch & reliability',
+    description: 'Practical help with hosting, domains, deployments, backups, monitoring, and simple automation so your site stays dependable.'
+  },
+  {
+    number: '03 / SUPPORT',
+    title: 'Ongoing support',
+    description: 'Optional monthly support for updates, fixes, small improvements, and technical questions after your project is live.'
+  }
+];
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="description" content="Practical website builds, launch support, and ongoing technical support for individuals and small businesses." />
+  <title>Websites & Technical Support | Kevin Dang</title>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="container">
+      <nav aria-label="Main navigation">
+        <span></span>
+        <div class="nav-links">
+          <a href="#services">Services</a>
+          <a href="#contact">Contact</a>
+          <a class="button" href="#contact">Start a project</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero container">
+        <div>
+          <div class="eyebrow">Websites and technical help for small teams</div>
+          <h1>Practical help for your next website.</h1>
+          <p class="hero-copy">I build and support useful websites for individuals and small businesses, with clear communication, straightforward solutions, and no unnecessary complexity.</p>
+          <div class="hero-actions">
+            <a class="button" href="#contact">Tell me what you need <span aria-hidden="true">&nbsp;→</span></a>
+            <a class="button light" href="#services">Explore services</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container" id="services">
+        <div class="section-heading">
+          <h2>Choose the help you need.</h2>
+          <p>Start with a focused project or get a little technical help each month. We can define the right scope together.</p>
+        </div>
+        <div class="services">
+          {services.map((service) => (
+            <article class="service">
+              <div class="service-number">{service.number}</div>
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="work container" aria-labelledby="work-heading">
+        <div>
+          <div class="eyebrow">Selected work</div>
+          <h2 id="work-heading">A real local business website, with more to come.</h2>
+        </div>
+        <div class="work-links">
+          <a href="https://serenasews.com" target="_blank" rel="noreferrer"><strong>Serena Sews</strong><span>Alterations by a local seamstress in Oceanside, CA&nbsp;<span class="external-arrow" aria-hidden="true">↗</span></span></a>
+        </div>
+      </section>
+
+      <section class="contact container" id="contact">
+        <div>
+          <div class="eyebrow">Let’s talk</div>
+          <h2>Have a problem worth solving?</h2>
+          <p class="contact-copy">Share a little context and I’ll get back to you with a useful next step, not a sales script. I’m based in San Diego County and work on Pacific Time.</p>
+        </div>
+        <form id="inquiry-form">
+          <div class="form-row">
+            <label>Name <input name="name" required autocomplete="name" placeholder="Your name" /></label>
+            <label>Email <input name="email" type="email" required autocomplete="email" placeholder="you@example.com" /></label>
+          </div>
+          <label>What can I help with?
+            <select name="service">
+              <option>Website</option>
+              <option>Launch & reliability help</option>
+              <option>Ongoing support</option>
+              <option>Not sure yet</option>
+            </select>
+          </label>
+          <label>Project details <textarea name="details" required placeholder="What are you trying to build or improve?"></textarea></label>
+          <button class="button form-button" type="submit">Prepare inquiry <span aria-hidden="true">&nbsp;→</span></button>
+          <p class="form-status" id="form-status" role="status"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="container">
+      <div>
+        <strong>Kevin Dang</strong>
+        <span>Websites · Launch support · Ongoing support</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+        <a href="https://github.com/kevinthedang" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      </nav>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('inquiry-form')?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement)) return;
+      const data = new FormData(form);
+      const subject = encodeURIComponent('New services inquiry from ' + data.get('name'));
+      const body = encodeURIComponent('Name: ' + data.get('name') + '\nEmail: ' + data.get('email') + '\nService: ' + data.get('service') + '\n\n' + data.get('details'));
+      window.location.href = 'mailto:hello@kevinthedang.com?subject=' + subject + '&body=' + body;
+      const status = document.getElementById('form-status');
+      if (status) status.textContent = 'Your email app should open with the inquiry ready to send.';
+    });
+  </script>
+</body>
+</html>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+  :root { --ink:#17221f; --muted:#61706a; --paper:#f7f8f5; --line:#dbe3dc; --green:#1d6b55; --lime:#d8f06b; --coral:#ef765b; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; color:var(--ink); background:var(--paper); font-family:'DM Sans',sans-serif; line-height:1.6; }
+  a { color:inherit; text-decoration:none; }
+  .page-shell { min-height:100vh; overflow:hidden; background:var(--paper); }
+  .container { width:min(1120px,calc(100% - 40px)); margin:0 auto; }
+  nav { display:flex; align-items:center; justify-content:space-between; padding:28px 0; }
+  .brand { display:flex; align-items:center; gap:11px; font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:-.03em; }
+  .brand-mark { display:grid; width:30px; height:30px; place-items:center; border:1px solid var(--green); border-radius:50%; color:var(--green); background:transparent; font-size:18px; }
+  .nav-links { display:flex; align-items:center; gap:28px; color:var(--muted); font-size:14px; }
+  .nav-links a:hover { color:var(--ink); }
+  .button { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:0 18px; border:1px solid var(--ink); border-radius:3px; background:var(--ink); color:white; font-weight:700; font-size:14px; }
+  .button:hover { background:var(--green); }
+  .button.light { border-color:var(--line); background:white; color:var(--ink); }
+  .button.light:hover { border-color:var(--ink); background:white; }
+  .hero { max-width:850px; padding:82px 0 96px; }
+  .eyebrow { display:flex; align-items:center; gap:10px; color:var(--green); font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+  .eyebrow::before { width:32px; height:2px; background:var(--coral); content:''; }
+  h1,h2,h3 { font-family:'Space Grotesk',sans-serif; letter-spacing:-.055em; line-height:1.05; }
+  h1 { max-width:660px; margin:20px 0; font-size:clamp(3rem,6vw,5.25rem); }
+  .hero-copy { max-width:560px; margin:0 0 30px; color:var(--muted); font-size:17px; }
+  .hero-actions { display:flex; flex-wrap:wrap; gap:12px; }
+  .section { padding:82px 0; }
+  .section-heading { display:flex; justify-content:space-between; gap:30px; align-items:end; margin-bottom:38px; }
+  h2 { max-width:570px; margin:0; font-size:clamp(2.3rem,5vw,4rem); }
+  .section-heading p { max-width:330px; margin:0; color:var(--muted); }
+  .services { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .service { min-height:250px; padding:28px; border:1px solid var(--line); background:#fff; }
+  .service-number { color:var(--coral); font:700 14px 'Space Grotesk',sans-serif; }
+  .service h3 { margin:46px 0 12px; font-size:25px; letter-spacing:-.04em; }
+  .service p { margin:0; color:var(--muted); font-size:15px; }
+  .work { display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:start; padding:22px 0 82px; }
+  .work h2 { margin-top:18px; font-size:clamp(2rem,4vw,3rem); }
+  .work-links { border-top:1px solid var(--line); }
+  .work-links a { display:flex; justify-content:space-between; gap:20px; padding:18px 0; border-bottom:1px solid var(--line); }
+  .work-links a:hover strong { color:var(--green); }
+  .work-links strong, .work-links span { display:block; }
+  .work-links span { color:var(--muted); font-size:14px; }
+  .work-links .external-arrow { display:inline; white-space:nowrap; }
+  .contact { display:grid; grid-template-columns:.8fr 1.2fr; gap:70px; padding:72px; border:1px solid var(--line); background:#edf1eb; }
+  .contact h2 { color:var(--ink); }
+  .contact-copy { color:var(--muted); }
+  form { display:grid; gap:14px; }
+  label { display:grid; gap:6px; color:var(--ink); font-size:13px; font-weight:600; }
+  input,textarea,select { width:100%; border:1px solid #bdc9c0; border-radius:3px; padding:13px 14px; color:var(--ink); background:#fff; font:inherit; }
+  textarea { min-height:110px; resize:vertical; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .form-button { justify-self:start; margin-top:6px; cursor:pointer; }
+  .form-button:hover { background:white; }
+  .form-status { min-height:22px; margin:0; color:var(--green); font-size:14px; }
+  footer { display:flex; justify-content:space-between; gap:30px; padding:30px 0; color:var(--muted); font-size:13px; }
+  footer strong, footer span { display:block; }
+  footer span { margin-top:4px; }
+  .footer-links { display:flex; gap:22px; align-items:flex-start; }
+  .footer-links a:hover { color:var(--green); }
+  .footer-links span { display:inline; }
+  @media (max-width:800px) { .nav-links a:not(.button){display:none;} .hero{padding:60px 0 75px;} .services,.contact,.work{grid-template-columns:1fr;} .contact{gap:35px;padding:42px 28px;} .work{gap:30px;padding-top:0;} .section-heading{display:block;} .section-heading p{margin-top:18px;} }
+  @media (max-width:480px) { .container{width:min(100% - 28px,1120px);} h1{font-size:3.5rem;} .form-row{grid-template-columns:1fr;} footer{display:block;} .footer-links{margin-top:18px; flex-wrap:wrap;} }
+</style>
